@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Run",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}",
+            "args": ["internal/boards/testdata/basic", "${input:debugArg}"]
+        },
+        {
+            "name": "Run on invalidMix",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}",
+            "args": ["internal/boards/testdata/invalidMix", "${input:debugArg}"]
+        },
+    ],
+    "inputs": [
+        {
+            "id": "debugArg",
+            "type": "pickString",
+            "default": "",
+            "description": "Enable log debugging",
+            "options": ["--log-level=debug", ""]
+        }
+    ]
+}

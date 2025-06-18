@@ -1,0 +1,16 @@
+{
+  "boards": [
+    {
+      "name": "B1",
+      "vendor": "Boards R Us",
+      "core": "Cortex-M7",
+      "has_wifi": true
+    },
+    {
+      "name": "B2",
+      "vendor": "Tech Corp.",
+      "core": "Cortex-M0+",
+      "has_wifi": false
+    }
+  ]
+}
