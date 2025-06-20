@@ -2,8 +2,6 @@ package boards
 
 import (
 	"context"
-	"sort"
-	"strings"
 
 	"github.com/rmhyde/fusion/internal/helpers"
 	"github.com/rs/zerolog"
@@ -19,7 +17,7 @@ func (o Options) Combine(ctx context.Context) (BoardWrapper, error) {
 	}
 
 	logger.Debug().Msg("Reading in boards from files")
-	wrapper := getBoards(ctx, files)
+	wrapper := unmarshalFiles(ctx, files)
 
 	logger.Debug().Msg("Sorting and gathering metrics on boards")
 
@@ -28,7 +26,7 @@ func (o Options) Combine(ctx context.Context) (BoardWrapper, error) {
 	return wrapper, nil
 }
 
-func getBoards(ctx context.Context, files []string) (wrapper BoardWrapper) {
+func unmarshalFiles(ctx context.Context, files []string) (wrapper BoardWrapper) {
 	logger := zerolog.Ctx(ctx)
 	for _, path := range files {
 		b, err := helpers.ReadAsType[BoardWrapper](path)
@@ -44,32 +42,4 @@ func getBoards(ctx context.Context, files []string) (wrapper BoardWrapper) {
 		wrapper.Boards = append(wrapper.Boards, b.Boards...)
 	}
 	return
-}
-
-func (o Options) sortAndGatherMetrics(ctx context.Context, wrapper BoardWrapper) BoardWrapper {
-	sort.Slice(wrapper.Boards, func(i, j int) bool {
-		if wrapper.Boards[i].Vendor != wrapper.Boards[j].Vendor {
-			return wrapper.Boards[i].Vendor < wrapper.Boards[j].Vendor
-		}
-
-		return wrapper.Boards[i].Name < wrapper.Boards[j].Name
-	})
-
-	vendors := make(map[string]int)
-	for _, board := range wrapper.Boards {
-		wrapper.Metadata.Totals.Boards++
-		vendor := sanitizeVendor(board.Vendor)
-		_, ok := vendors[vendor]
-		if ok {
-			vendors[vendor]++
-		} else {
-			vendors[vendor] = 1
-		}
-	}
-	wrapper.Metadata.Totals.Vendors = len(vendors)
-	return wrapper
-}
-
-func sanitizeVendor(vendor string) string {
-	return strings.ToLower(vendor)
 }

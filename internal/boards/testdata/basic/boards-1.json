@@ -10,7 +10,7 @@
       "name": "C1-100X",
       "vendor": "Boards R Us",
       "core": "Cortex-M7",
-      "has_wifi": true
+      "has_wifi": false
     },
     {
       "name": "B7-400X",
