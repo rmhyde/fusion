@@ -1,0 +1,72 @@
+package cmd
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"os"
+
+	"github.com/rmhyde/fusion/internal/boards"
+	"github.com/rs/zerolog"
+	"github.com/spf13/cobra"
+)
+
+// RootCmd represents the base command when called without any subcommands
+var RootCmd = &cobra.Command{
+	Use:               "fustion",
+	Short:             "CLI Tool for combining json files within the current or specified folder",
+	PersistentPreRunE: rootCmdPersistentPreRunE,
+	RunE:              runE,
+}
+
+func runE(cmd *cobra.Command, args []string) error {
+	options := boards.Options{
+		Folder: ".",
+	}
+
+	if len(args) > 0 {
+		options.Folder = args[0]
+	}
+
+	wrapper, err := options.Combine(cmd.Context())
+	raw, err := json.Marshal(wrapper)
+	if err != nil {
+		fmt.Print(err.Error())
+	} else {
+		fmt.Print(string(raw))
+	}
+	return err
+}
+
+func Execute() {
+	logger := zerolog.New(zerolog.ConsoleWriter{
+		Out:          os.Stderr,
+		PartsExclude: []string{zerolog.TimestampFieldName},
+	}).With().Timestamp().Logger()
+
+	cobra.CheckErr(RootCmd.ExecuteContext(logger.WithContext(context.Background())))
+}
+
+func init() {
+	RootCmd.PersistentFlags().String("log-level", "info", "Log level")
+}
+
+func rootCmdPersistentPreRunE(cmd *cobra.Command, args []string) error {
+	logger := zerolog.Ctx(cmd.Context())
+
+	logLevelFlag, err := cmd.Flags().GetString("log-level")
+	if err != nil {
+		return err
+	}
+	logLevel, err := zerolog.ParseLevel(logLevelFlag)
+	if err != nil {
+		logLevel = zerolog.InfoLevel
+		logger.Warn().Err(err).Msg("couldn't parse log level, defaulting to INFO")
+	}
+
+	levelLogger := logger.Level(logLevel)
+	levelLogger.With().Str("CommandName", cmd.CommandPath()).Logger()
+	levelLogger.WithContext(cmd.Context())
+	cmd.SetContext(levelLogger.WithContext(cmd.Context()))
+	return nil
+}
