@@ -1,0 +1,10 @@
+{
+  "boards": [
+    {
+      "name": "Will look at adding a recursive option to get this later",
+      "vendor": "In the meantime",
+      "core": "These aren't the json files you are looking for",
+      "has_wifi": false
+    }
+  ]
+}
