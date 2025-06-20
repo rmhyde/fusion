@@ -5,6 +5,12 @@
       "vendor": "Boards R Us",
       "core": "Cortex-M4",
       "has_wifi": false
+    },
+    {
+      "name": "Shrug Board",
+      "vendor": "Not Sure How, But It Works Inc.",
+      "core": "Cortex-M4",
+      "has_wifi": true
     }
   ]
 }

@@ -8,7 +8,7 @@ type Board struct {
 	Name    string
 	Vendor  string
 	Core    string
-	HasWifi bool
+	HasWifi bool `json:"has_wifi"`
 }
 
 type BoardWrapper struct {
@@ -22,8 +22,9 @@ type Metadata struct {
 }
 
 type Totals struct {
-	Vendors int
-	Boards  int
+	Vendors     int
+	Boards      int
+	WifiEnabled int `json:"wifi_enabled"`
 }
 
 type Errors struct {
