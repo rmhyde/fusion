@@ -13,7 +13,7 @@ import (
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
-	Use:               "fustion",
+	Use:               "fusion",
 	Short:             "CLI Tool for combining json files within the current or specified folder",
 	PersistentPreRunE: rootCmdPersistentPreRunE,
 	RunE:              runE,

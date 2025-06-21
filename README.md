@@ -2,12 +2,22 @@
 
 A tool for pulling together multiple jsons through a CLI
 
-## Initial Version
+## Details
 
-Roughly a day spread out across a few days, this is just the basic version.  It accepts a path which defaults to the current directory if none is specified
+Roughly a day so far, spread out across a few days, this is just the basic version which I have been adding to.  It accepts a path which defaults to the current directory if none is specified
 
 ```
-fusion ./my-json-files
+./fusion ./my-json-files [options]
+
+CLI Tool for combining json files within the current or specified folder
+
+Usage:
+  fusion [flags]
+
+Flags:
+  -h, --help               help for fusion
+      --log-level string   Log level (default "info")
+  -r, --recursive          Recursively get all json files within the parent folder and child folders
 ```
 
 # Tools used
@@ -33,7 +43,6 @@ Things I would improve in no particular order
 * Pretty Print Json
 * Output Type
 * Take/Limit/etc
-* Recursive: -r
 * Avoiding reading all the boards into memory
 
 ## Webapp Improvements
