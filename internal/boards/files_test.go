@@ -7,20 +7,26 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetFiles(t *testing.T) {
+func TestGetFilesRecursively(t *testing.T) {
 	o := Options{
-		Folder: "testdata/basic",
+		Folder:    "testdata/basic",
+		Recursive: false,
 	}
-	files, err := o.getFiles(helpers.NewTestWriterContext(t))
-	assert.NoError(t, err, "We shouldn't see an error yet")
-	assert.Len(t, files, 2, "")
+	files, err := o.getFilesRecursively(helpers.NewTestWriterContext(t))
+	assert.NoError(t, err, "We shouldn't see an error")
+	assert.Len(t, files, 2)
+
+	o.Recursive = true
+	files, err = o.getFilesRecursively(helpers.NewTestWriterContext(t))
+	assert.NoError(t, err, "We still shouldn't see an error")
+	assert.Len(t, files, 4)
 }
 
-func TestGetFiles_InvalidFolder(t *testing.T) {
+func TestGetFilesRecursively_InvalidFolder(t *testing.T) {
 	o := Options{
 		Folder: "does/not/exist",
 	}
-	files, err := o.getFiles(helpers.NewTestWriterContext(t))
-	assert.Error(t, err, "We shouldn't see an error yet")
+	files, err := o.getFilesRecursively(helpers.NewTestWriterContext(t))
+	assert.Error(t, err, "We should see an error")
 	assert.Nil(t, files)
 }

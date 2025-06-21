@@ -2,10 +2,6 @@
 
 A tool for pulling together multiple jsons through a CLI
 
-# Time taken
-
-Documenting how long each step of the code took
-
 ## Initial Version
 
 Roughly a day spread out across a few days, this is just the basic version.  It accepts a path which defaults to the current directory if none is specified
@@ -17,9 +13,9 @@ fusion ./my-json-files
 # Tools used
 
 * VSCode + Go Extension
+* Go 1.24.4
 * WSL2
 * gitignore.io
-* Go 1.24.4
 * Github
 * Gemini (my go is rusty and AI is amazingly good at reminding me and getting me back on the right track)
 

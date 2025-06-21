@@ -11,7 +11,7 @@ func (o Options) Combine(ctx context.Context) (BoardWrapper, error) {
 	logger := zerolog.Ctx(ctx)
 
 	logger.Debug().Msgf("Getting json files from folder '%s'", o.Folder)
-	files, err := o.getFiles(ctx)
+	files, err := o.getFilesRecursively(ctx)
 	if err != nil {
 		return BoardWrapper{}, err
 	}

@@ -1,7 +1,8 @@
 package boards
 
 type Options struct {
-	Folder string
+	Folder    string
+	Recursive bool
 }
 
 type Board struct {

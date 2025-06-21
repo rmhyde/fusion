@@ -2,6 +2,7 @@ package boards
 
 import (
 	"context"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -9,7 +10,7 @@ import (
 	"github.com/rs/zerolog"
 )
 
-func (o Options) getFiles(ctx context.Context) (jsonFiles []string, err error) {
+func (o Options) getFilesRecursively(ctx context.Context) (jsonFiles []string, err error) {
 	logger := zerolog.Ctx(ctx)
 	logger.Debug().Msgf("Verifying folder '%s'", o.Folder)
 
@@ -19,26 +20,21 @@ func (o Options) getFiles(ctx context.Context) (jsonFiles []string, err error) {
 		return
 	}
 
-	allFiles, err := os.ReadDir(o.Folder)
-	if err != nil {
-		logger.Err(err).Msgf("Error reading from %s", o.Folder)
-		return
-	}
-
-	for _, file := range allFiles {
-		if file.IsDir() {
-			continue
+	err = filepath.WalkDir(o.Folder, func(path string, d fs.DirEntry, err error) error {
+		if !o.Recursive && d.IsDir() && path != o.Folder {
+			logger.Debug().Msg("Recursion is not enabled and this isn't the parent directory, skipping directory")
+			return filepath.SkipDir
 		}
 
-		logger.Debug().Msg(file.Name())
+		logger.Debug().Msgf("Path: %s, d: %s, err: %s", path, d, err)
 		// Currently we will just check for .json files but could always improve with a wildcard feature
-		if !strings.HasSuffix(strings.ToLower(file.Name()), "json") {
-			logger.Debug().Msgf("Skipping %s as extension is not valid", file.Name())
-			continue
+		if !strings.HasSuffix(strings.ToLower(path), "json") {
+			logger.Debug().Msgf("Skipping %s as extension is not valid", path)
+			return nil
 		}
-
-		path := filepath.Join(o.Folder, file.Name())
 		jsonFiles = append(jsonFiles, path)
-	}
+		return nil
+	})
+
 	return
 }

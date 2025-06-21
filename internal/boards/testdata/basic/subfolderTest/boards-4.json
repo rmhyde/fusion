@@ -1,0 +1,10 @@
+{
+  "boards": [
+    {
+      "name": "ZZ-TOP",
+      "vendor": "Houston Texas Boards",
+      "core": "GMAYL-AYHAK2",
+      "has_wifi": false
+    }
+  ]
+}
