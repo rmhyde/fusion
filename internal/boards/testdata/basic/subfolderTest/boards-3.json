@@ -1,0 +1,16 @@
+{
+  "boards": [
+      {
+      "name": "AA1-100X",
+      "vendor": "Broken Down Inc",
+      "core": "Recovery-M7",
+      "has_wifi": true
+    },
+    {
+      "name": "RAC9-900X",
+      "vendor": "Broken Down Inc",
+      "core": "Recovery-M7",
+      "has_wifi": true
+    }
+  ]
+}

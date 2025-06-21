@@ -8,7 +8,7 @@ import (
 
 func (o Options) sortAndGatherMetrics(ctx context.Context, wrapper BoardWrapper) BoardWrapper {
 	sort.Slice(wrapper.Boards, func(i, j int) bool {
-		if wrapper.Boards[i].Vendor != wrapper.Boards[j].Vendor {
+		if !strings.EqualFold(wrapper.Boards[i].Vendor, wrapper.Boards[j].Vendor) {
 			return wrapper.Boards[i].Vendor < wrapper.Boards[j].Vendor
 		}
 

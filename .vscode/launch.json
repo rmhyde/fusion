@@ -6,7 +6,7 @@
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}",
-            "args": ["internal/boards/testdata/basic", "${input:debugArg}"]
+            "args": ["internal/boards/testdata/basic", "${input:debugArg}", "${input:recursiveArg}"]
         },
         {
             "name": "Run on invalidMix",
@@ -14,8 +14,8 @@
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}",
-            "args": ["internal/boards/testdata/invalidMix", "${input:debugArg}"]
-        },
+            "args": ["internal/boards/testdata/invalidMix", "${input:debugArg}", "${input:recursiveArg}"]
+        }
     ],
     "inputs": [
         {
@@ -24,6 +24,13 @@
             "default": "",
             "description": "Enable log debugging",
             "options": ["--log-level=debug", ""]
+        },
+        {
+            "id": "recursiveArg",
+            "type": "pickString",
+            "default": "",
+            "description": "Enable recursion",
+            "options": ["-r", ""]
         }
     ]
 }
