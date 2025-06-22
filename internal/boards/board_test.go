@@ -10,8 +10,9 @@ import (
 func TestCombine(t *testing.T) {
 	o := Options{
 		Folder: "testdata/basic",
+		Ctx:    helpers.NewTestWriterContext(t),
 	}
-	response, err := o.Combine(helpers.NewTestWriterContext(t))
+	response, err := o.Combine()
 	assert.Nil(t, err)
 	assert.Equal(t, "A1-100X", response.Boards[0].Name)
 	assert.Equal(t, "B7-400X", response.Boards[1].Name)
@@ -28,8 +29,9 @@ func TestCombine(t *testing.T) {
 func TestCombine_WithInvalidJsonFilesInFolders(t *testing.T) {
 	o := Options{
 		Folder: "testdata/invalidMix",
+		Ctx:    helpers.NewTestWriterContext(t),
 	}
-	response, err := o.Combine(helpers.NewTestWriterContext(t))
+	response, err := o.Combine()
 	assert.Nil(t, err)
 	assert.Equal(t, 3, response.Metadata.Totals.Boards)
 	assert.Equal(t, 2, response.Metadata.Totals.Vendors)
@@ -42,7 +44,8 @@ func TestCombine_WithInvalidJsonFilesInFolders(t *testing.T) {
 func TestCombine_InvalidFolder(t *testing.T) {
 	o := Options{
 		Folder: "where/the/heck/am/i",
+		Ctx:    helpers.NewTestWriterContext(t),
 	}
-	_, err := o.Combine(helpers.NewTestWriterContext(t))
+	_, err := o.Combine()
 	assert.NotNil(t, err)
 }

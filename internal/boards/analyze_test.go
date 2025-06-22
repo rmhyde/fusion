@@ -9,8 +9,10 @@ import (
 
 func TestSortAndGatherMetrics(t *testing.T) {
 	wrapper := inputData()
-	o := Options{}
-	response := o.sortAndGatherMetrics(helpers.NewTestWriterContext(t), wrapper)
+	o := Options{
+		Ctx: helpers.NewTestWriterContext(t),
+	}
+	response := o.sortAndGatherMetrics(wrapper)
 	assert.Equal(t, expectedData(), response, "Lists do not match, something has gone wrong")
 }
 

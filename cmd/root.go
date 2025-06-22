@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/rmhyde/fusion/cmd/serve"
 	"github.com/rmhyde/fusion/cmd/utils"
 	"github.com/rs/zerolog"
 	"github.com/spf13/cobra"
@@ -25,7 +26,7 @@ func runE(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	wrapper, err := options.Combine(cmd.Context())
+	wrapper, err := options.Combine()
 	raw, err := json.Marshal(wrapper)
 	if err != nil {
 		fmt.Print(err.Error())
@@ -47,6 +48,7 @@ func Execute() {
 func init() {
 	RootCmd.PersistentFlags().String("log-level", "info", "Log level")
 	RootCmd.PersistentFlags().BoolP("recursive", "r", false, "Recursively get all json files within the parent folder and child folders")
+	RootCmd.AddCommand(serve.ServeCmd)
 }
 
 func rootCmdPersistentPreRunE(cmd *cobra.Command, args []string) error {

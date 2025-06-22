@@ -1,8 +1,11 @@
 package boards
 
+import "context"
+
 type Options struct {
 	Folder    string
 	Recursive bool
+	Ctx       context.Context
 }
 
 type Board struct {

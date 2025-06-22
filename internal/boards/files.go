@@ -1,7 +1,6 @@
 package boards
 
 import (
-	"context"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -10,8 +9,8 @@ import (
 	"github.com/rs/zerolog"
 )
 
-func (o Options) getFilesRecursively(ctx context.Context) (jsonFiles []string, err error) {
-	logger := zerolog.Ctx(ctx)
+func (o Options) getFilesRecursively() (jsonFiles []string, err error) {
+	logger := zerolog.Ctx(o.Ctx)
 	logger.Debug().Msgf("Verifying folder '%s'", o.Folder)
 
 	// Verify folder
