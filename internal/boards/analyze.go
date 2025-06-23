@@ -1,12 +1,11 @@
 package boards
 
 import (
-	"context"
 	"sort"
 	"strings"
 )
 
-func (o Options) sortAndGatherMetrics(ctx context.Context, wrapper BoardWrapper) BoardWrapper {
+func (o Options) sortAndGatherMetrics(wrapper BoardWrapper) BoardWrapper {
 	sort.Slice(wrapper.Boards, func(i, j int) bool {
 		if !strings.EqualFold(wrapper.Boards[i].Vendor, wrapper.Boards[j].Vendor) {
 			return wrapper.Boards[i].Vendor < wrapper.Boards[j].Vendor

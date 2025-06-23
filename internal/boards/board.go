@@ -7,21 +7,21 @@ import (
 	"github.com/rs/zerolog"
 )
 
-func (o Options) Combine(ctx context.Context) (BoardWrapper, error) {
-	logger := zerolog.Ctx(ctx)
+func (o Options) Combine() (BoardWrapper, error) {
+	logger := zerolog.Ctx(o.Ctx)
 
 	logger.Debug().Msgf("Getting json files from folder '%s'", o.Folder)
-	files, err := o.getFilesRecursively(ctx)
+	files, err := o.getFilesRecursively()
 	if err != nil {
 		return BoardWrapper{}, err
 	}
 
 	logger.Debug().Msg("Reading in boards from files")
-	wrapper := unmarshalFiles(ctx, files)
+	wrapper := unmarshalFiles(o.Ctx, files)
 
 	logger.Debug().Msg("Sorting and gathering metrics on boards")
 
-	wrapper = o.sortAndGatherMetrics(ctx, wrapper)
+	wrapper = o.sortAndGatherMetrics(wrapper)
 
 	return wrapper, nil
 }
