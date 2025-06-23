@@ -17,6 +17,7 @@ var RootCmd = &cobra.Command{
 	Use:               "fusion",
 	Short:             "CLI Tool for combining json files within the current or specified folder",
 	PersistentPreRunE: rootCmdPersistentPreRunE,
+	Args:              cobra.ArbitraryArgs,
 	RunE:              runE,
 }
 

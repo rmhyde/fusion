@@ -14,8 +14,6 @@ var ServeCmd = &cobra.Command{
 func init() {
 	ServeCmd.PersistentFlags().Int("port", 8080, "Port number of the webserver, will default to 8080")
 	ServeCmd.PersistentFlags().String("host", "localhost", "hostname to list")
-	ServeCmd.PersistentFlags().String("log-level", "info", "Log level")
-	ServeCmd.PersistentFlags().BoolP("recursive", "r", false, "Recursively get all json files within the parent folder and child folders")
 }
 
 func runE(cmd *cobra.Command, args []string) error {
@@ -24,5 +22,5 @@ func runE(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	return options.StartWebServer(cmd.Context())
+	return options.StartWebServer()
 }
